@@ -20,17 +20,25 @@ function App() {
   const [tries, setTries] = useState(0);
 
   const openCell = (index: number) => {
-    console.log(index)
+    if (cells[index].clicked) return;
+
     setCells(prev => prev.map((cell, i) => {
       if (index === i) {
         return {
           ...cell,
-          hasItem: true,
+          clicked: true,
         };
       }
 
       return cell;
-    }))
+    }));
+
+    setTries(prev => prev + 1);
+  };
+
+  const reset = () => {
+    setCells(createItems());
+    setTries(0);
   };
 
   return (
@@ -39,16 +47,17 @@ function App() {
         {cells.map((cell, index) =>(
           <div
             key={index}
-            className="Cell"
             onClick={() => openCell(index)}
+            className={cell.clicked ? "Cell Open" : "Cell"}
           >
+            {cell.clicked && cell.hasItem && 0}
           </div>
         ))}
       </div>
 
       <div className="Counter">Tries: {tries}</div>
       <div className="Controls">
-        <button type="button">Reset</button>
+        <button type="button" onClick={reset}>Reset</button>
       </div>
     </div>
   );
