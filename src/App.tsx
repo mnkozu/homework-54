@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
+import Board from "./components/Board/Board";
+import Control from "./components/Controls/Control";
 
 function App() {
   const createItems = () => {
@@ -15,7 +17,6 @@ function App() {
 
     return initialState;
   };
-
   const [cells, setCells] = useState(createItems());
   const [tries, setTries] = useState(0);
   const [isFinish, setIsFinish] = useState(false);
@@ -49,25 +50,13 @@ function App() {
 
   return (
     <div className="App">
-      <div className="Board">
-        {cells.map((cell, index) =>(
-          <div
-            key={index}
-            onClick={() => openCell(index)}
-            className={cell.clicked ? "Cell Open" : "Cell"}
-          >
-            {cell.clicked && cell.hasItem && 0}
-          </div>
-        ))}
-      </div>
+      <Board cells={cells} openCell={openCell}/>
 
       <div className="Counter">
         <p>Tries: {tries}</p>
         <p>{isFinish && "Good Job!"}</p>
       </div>
-      <div className="Controls">
-        <button type="button" onClick={reset}>Reset</button>
-      </div>
+      <Control reset={reset}/>
     </div>
   );
 }

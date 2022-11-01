@@ -1,0 +1,16 @@
+.Cell {
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background: grey;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.Open {
+    background: white;
+    cursor: auto;
+}
