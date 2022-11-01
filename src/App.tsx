@@ -18,9 +18,10 @@ function App() {
 
   const [cells, setCells] = useState(createItems());
   const [tries, setTries] = useState(0);
+  const [isFinish, setIsFinish] = useState(false);
 
   const openCell = (index: number) => {
-    if (cells[index].clicked) return;
+    if (cells[index].clicked || isFinish) return;
 
     setCells(prev => prev.map((cell, i) => {
       if (index === i) {
@@ -34,11 +35,16 @@ function App() {
     }));
 
     setTries(prev => prev + 1);
+
+    if (cells[index].hasItem) {
+      setIsFinish(true);
+    }
   };
 
   const reset = () => {
     setCells(createItems());
     setTries(0);
+    setIsFinish(false);
   };
 
   return (
@@ -55,7 +61,10 @@ function App() {
         ))}
       </div>
 
-      <div className="Counter">Tries: {tries}</div>
+      <div className="Counter">
+        <p>Tries: {tries}</p>
+        <p>{isFinish && "Good Job!"}</p>
+      </div>
       <div className="Controls">
         <button type="button" onClick={reset}>Reset</button>
       </div>
